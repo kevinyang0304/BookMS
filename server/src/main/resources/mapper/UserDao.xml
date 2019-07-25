@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.website.server.dao.UserDao">
+
+    <resultMap type="com.org.website.server.entity.User" id="UserMap">
+        <result property="id" column="ID"/>
+        <result property="username" column="USERNAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="email" column="EMAIL"/>
+    </resultMap>
+
+    <select id="selectUser" resultMap="UserMap">
+        SELECT
+        ID,
+        USERNAME,
+        PASSWORD,
+        EMAIL
+        FROM
+        USER
+        <where>
+            <if test="user.username!=null and user.username!=''">
+                AND USERNAME = #{user.username}
+            </if>
+            <if test="user.password!=null and user.password!=''">
+                AND PASSWORD = #{user.password}
+            </if>
+        </where>
+    </select>
+
+</mapper>

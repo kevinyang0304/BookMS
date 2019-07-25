@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.website.server.dao.BookDao">
+
+    <resultMap type="com.org.website.server.entity.Book" id="BookMap">
+        <result property="id" column="ID"/>
+        <result property="date" column="DATE"/>
+        <result property="bookName" column="BOOK_NAME"/>
+        <result property="price" column="PRICE"/>
+        <result property="kind" column="KIND"/>
+    </resultMap>
+
+    <select id="selectBook" resultMap="BookMap">
+        SELECT
+        ID,
+        DATE,
+        BOOK_NAME,
+        PRICE,
+        KIND
+        FROM
+        BOOK
+        <where>
+            <if test="book.id!=null">
+                AND ID = #{book.id}
+            </if>
+            <if test="book.date!=null and book.date!=''">
+                AND DATE = #{book.date}
+            </if>
+            <if test="book.bookName!=null and book.bookName!=''">
+                AND BOOK_NAME = #{book.bookName}
+            </if>
+            <if test="book.price!=null and book.price!=''">
+                AND PRICE = #{book.price}
+            </if>
+            <if test="book.kind!=null and book.kind!=''">
+                AND KIND = #{book.kind}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBook" parameterType="com.org.website.server.entity.Book">
+        INSERT INTO BOOK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="book.id != null">
+                ID,
+            </if>
+            <if test="book.date != null">
+                DATE,
+            </if>
+            <if test="book.bookName != null">
+                BOOK_NAME,
+            </if>
+            <if test="book.price != null">
+                PRICE,
+            </if>
+            <if test="book.kind != null">
+                KIND
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="book.id != null">
+                #{book.id},
+            </if>
+            <if test="book.date != null">
+                #{book.date},
+            </if>
+            <if test="book.bookName != null">
+                #{book.bookName},
+            </if>
+            <if test="book.price != null">
+                #{book.price},
+            </if>
+            <if test="book.kind != null">
+                #{book.kind}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateBook" parameterType="com.org.website.server.entity.Book">
+        UPDATE BOOK
+        <set>
+            <if test="book.date != null">
+                DATE = #{book.date},
+            </if>
+            <if test="book.bookName != null">
+                BOOK_NAME = #{book.bookName},
+            </if>
+            <if test="book.price != null">
+                PRICE = #{book.price},
+            </if>
+            <if test="book.kind != null">
+                KIND = #{book.kind}
+            </if>
+        </set>
+        <where>
+            <if test="book.id != null">
+                ID = #{book.id}
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteBook" parameterType="com.org.website.server.entity.Book">
+        DELETE
+        FROM
+        BOOK
+        <where>
+            <if test="book.id != null">
+                ID = #{book.id}
+            </if>
+        </where>
+    </delete>
+</mapper>
