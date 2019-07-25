@@ -17,7 +17,7 @@ Vue.prototype.$http = axios
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
-Vue.use(axios)
+//Vue.use(axios)
 
 const router = new VueRouter({
   mode: 'history',
